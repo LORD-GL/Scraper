@@ -1,5 +1,6 @@
 import logging
 import warnings
+from conf import Conf
 from telegram.ext import CommandHandler, MessageHandler
 from telegram.ext import ApplicationBuilder, filters
 from handlers import *
@@ -15,7 +16,9 @@ logging.basicConfig(
 
 if __name__ == '__main__':
     # Создает обьект приложения по токену
-    app = ApplicationBuilder().token("5926902754:AAGmRe9XBGaFkDX1q1aRq7S74OhFSWeM7ZQ").build()
+    app =  ApplicationBuilder().token("5926902754:AAGmRe9XBGaFkDX1q1aRq7S74OhFSWeM7ZQ").build()
+
+    Conf.configPage()
 
     ##### Добавляем и инициализируем хэндреры #####
     app.add_handler(CommandHandler("start", start))
@@ -26,3 +29,5 @@ if __name__ == '__main__':
     app.add_handler(MessageHandler(filters.TEXT, unknown))
 
     app.run_polling()
+
+    Conf.closePage()

@@ -3,22 +3,30 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 import time
 
+# Импорт виртуального дисплея
+from pyvirtualdisplay import Display
+# from xvfbwrapper import Xvfb  ### для UNIX систем
+
 # Импорт библиотки и модулей для цветного текста в консоли #
 from colorama import init
 from colorama import Fore, Style
 init()
-#########
+########
 
 options = webdriver.ChromeOptions() # создание объекта класса настройки
 options.add_argument("--headless") # уставновка безголового режима (без показывания окна браузера)
 options.add_argument('--log-level=3')  # установка уровня логирования
 options.add_argument('--log-file=binancelogfile.log') # перенаправление вывода в файл
 
+# Создания виртуального дисплея
+# Xvfb() # ДЛЯ UNIX
+display = Display(visible=0, size=(800, 600))
+display.start()
+
 # Открываем веб-драйвер Chrome и переходим на страницу Binance
 driver = webdriver.Chrome(chrome_options=options)
+driver.implicitly_wait(5) # ждём 5 секунд, чтобы дать время странице прогрутиться 
 driver.get("https://www.binance.com/en/trade/BTC_USDT?theme=dark&type=spot")
-
-time.sleep(5) # ждём 5 секунд, чтобы дать время странице прогрутиться
 
 # Если нужно соглашаемся с cookies
 try:
@@ -60,6 +68,8 @@ def get_data(driver, askBid = 'bid'):
     # Находим кнопку Buy\Sell и кликаем на нее
     regime_button = driver.find_elements(By.CLASS_NAME, "css-1meiumy")
     driver.execute_script("arguments[0].click();", regime_button[1])
+
+    time.sleep(2)
 
     # Получаем HTML-код страницы после нажатия на кнопку
     html = driver.page_source
@@ -105,7 +115,7 @@ def set_default(driver):
     driver.execute_script("arguments[0].click();", buy_button[0])
 
 ### ПОЛУЧАЕМ ДАННЫЕ ###
-for i in range(5):
+for i in range(1):
     print(Fore.BLUE+"=========== ITERATION ===========")
     orderbook = get_data(driver, 'ask') # Sell
     print_data(orderbook, 'ask')
@@ -117,5 +127,6 @@ for i in range(5):
 
 
 # Закрываем веб-драйвер
-# time.sleep(180)
 driver.quit()
+# Закрываем веб-дисплей
+display.stop()

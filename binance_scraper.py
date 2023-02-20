@@ -14,14 +14,14 @@ init()
 ########
 
 options = webdriver.ChromeOptions() # создание объекта класса настройки
-options.add_argument("--headless") # уставновка безголового режима (без показывания окна браузера)
+#options.add_argument("--headless") # уставновка безголового режима (без показывания окна браузера)
 options.add_argument('--log-level=3')  # установка уровня логирования
 options.add_argument('--log-file=binancelogfile.log') # перенаправление вывода в файл
 
 # Создания виртуального дисплея
 # Xvfb() # ДЛЯ UNIX
-display = Display(visible=0, size=(800, 600))
-display.start()
+#display = Display(visible=0, size=(800, 600))
+#display.start()
 
 # Открываем веб-драйвер Chrome и переходим на страницу Binance
 driver = webdriver.Chrome(chrome_options=options)
@@ -129,4 +129,4 @@ for i in range(1):
 # Закрываем веб-драйвер
 driver.quit()
 # Закрываем веб-дисплей
-display.stop()
+#display.stop()

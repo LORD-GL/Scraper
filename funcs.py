@@ -74,9 +74,7 @@ def _get_data(driver):
     # Находим кнопку Buy\Sell и кликаем на нее
     regime_button = driver.find_elements(By.CLASS_NAME, "css-1meiumy")
     driver.execute_script("arguments[0].click();", regime_button[1])
-
-    time.sleep(5)
-
+    
     # Получаем HTML-код страницы после нажатия на кнопку
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')

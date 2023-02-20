@@ -11,6 +11,6 @@ def private(func):
         else:
             print(f"Access refused for {args[0].effective_chat.id}", end = " | ")
             print(strftime('%d %b %Y %H:%M:%S (+0)', gmtime()))
-            args[0].message.reply_text("Купите подписку")
-            # return await func(*args, **kwargs)
+            args[1].bot.send_message(chat_id=args[0].effective_chat.id, text = "Купить подписку, чтобы получить доступ к боту!")
+            # return await func(*args, **kwargs) update.callback_query  callback_query.message.chat_id
     return wrapper

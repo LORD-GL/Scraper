@@ -16,7 +16,7 @@ logging.basicConfig(
 
 if __name__ == '__main__':
     # Создает обьект приложения по токену
-    app = ApplicationBuilder().token("5926902754:AAGmRe9XBGaFkDX1q1aRq7S74OhFSWeM7ZQ").build()
+    app = ApplicationBuilder().token("").build()
 
     Conf.set_keyboards() # Создаёт всё кнопки
 
